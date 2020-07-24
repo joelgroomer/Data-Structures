@@ -33,7 +33,14 @@ class DoublyLinkedList:
     """
 
     def add_to_head(self, value):
-        pass
+        new_node = ListNode(value, None, self.head)
+        if self.head is not None:
+            self.head.prev = new_node
+        else:
+            # if there was no head before, there was also no tail
+            self.tail = new_node
+        self.head = new_node
+        self.length += 1
 
     """
     Removes the List's current head node, making the
@@ -42,7 +49,22 @@ class DoublyLinkedList:
     """
 
     def remove_from_head(self):
-        pass
+        if self.head is None:
+            return None
+
+        old_head = self.head
+        if old_head.next is not None:
+            self.head = old_head.next
+            self.head.prev = None
+        else:
+            self.head = None
+
+        if old_head == self.tail:
+            self.tail = None
+
+        old_head.next = None
+        self.length -= 1
+        return old_head.value
 
     """
     Wraps the given value in a ListNode and inserts it 
