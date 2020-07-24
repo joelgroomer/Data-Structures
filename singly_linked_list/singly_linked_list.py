@@ -72,8 +72,9 @@ class LinkedList:
         else:
             value = self.tail.get_value()
             cur_node = self.head.get_next()
-            while cur_node.get_next() is not None:
+            while cur_node.get_next() is not self.tail:
                 cur_node = cur_node.get_next()
+            cur_node.set_next(None)
             self.tail = cur_node
             self.length -= 1
             return value
@@ -109,3 +110,31 @@ class LinkedList:
                 cur_max = cur_node.get_value()
             cur_node = cur_node.get_next()
         return cur_max
+
+    def find_middle(self):
+        """ How do you find and return the middle node of a singly 
+        linked list in one pass? You do not have access to the length 
+        of the list. If the list is even, you should return the second 
+        of the two "middle" nodes. You may not store the nodes in another 
+        data structure."""
+        if self.head is None:
+            return None
+
+        mid_point = self.head
+        end_point = self.head
+        while end_point is not None and end_point.get_next() is not None:
+            mid_point = mid_point.get_next()
+            end_point = end_point.get_next().get_next()
+        return mid_point.get_value()
+
+
+# test find_middle()
+ll = LinkedList()
+ll.add_to_tail(1)
+ll.add_to_tail(2)
+ll.add_to_tail(3)
+ll.add_to_tail(4)
+ll.add_to_tail(5)
+ll.add_to_tail(6)
+ll.add_to_tail(7)
+print(ll.find_middle())

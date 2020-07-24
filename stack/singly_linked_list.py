@@ -72,8 +72,9 @@ class LinkedList:
         else:
             value = self.tail.get_value()
             cur_node = self.head.get_next()
-            while cur_node.get_next() is not None:
+            while cur_node.get_next() is not self.tail:
                 cur_node = cur_node.get_next()
+            cur_node.set_next(None)
             self.tail = cur_node
             self.length -= 1
             return value
