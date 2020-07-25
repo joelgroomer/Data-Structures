@@ -164,9 +164,17 @@ class DoublyLinkedList:
     """
 
     def delete(self, node):
-        node.prev.next = node.next
-        node.next.prev = node.prev
-        self.length -= 1
+        if self.length == 0:
+            return
+
+        if node == self.head:
+            self.remove_from_head()
+        elif node == self.tail:
+            self.remove_from_tail()
+        else:
+            node.prev.next = node.next
+            node.next.prev = node.prev
+            self.length -= 1
 
     """
     Finds and returns the maximum value of all the nodes 
