@@ -182,7 +182,16 @@ class DoublyLinkedList:
     """
 
     def get_max(self):
-        pass
+        if self.length == 0:
+            return None
+
+        cur_max = self.head.value
+        cur_node = self.head.next
+        while cur_node is not None:
+            if cur_node.value > cur_max:
+                cur_max = cur_node.value
+            cur_node = cur_node.next
+        return cur_max
 
     def __str__(self):
         val = f'length {self.length}: N'
