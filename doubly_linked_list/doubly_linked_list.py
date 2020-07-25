@@ -36,7 +36,7 @@ class DoublyLinkedList:
         new_node = ListNode(value, None, self.head)
         if self.head is not None:
             self.head.prev = new_node
-            new_node.next = self.head
+            # new_node.next = self.head
         else:
             # if there was no head before, there was also no tail
             self.tail = new_node
@@ -74,14 +74,17 @@ class DoublyLinkedList:
     """
 
     def add_to_tail(self, value):
-        new_node = ListNode(value, None, self.head)
+        print(f'adding {value} to tail')
+        new_node = ListNode(value, self.tail, None)
         if self.tail is not None:
-            new_node.prev = self.tail
+            # new_node.prev = self.tail
             self.tail.next = new_node
+            print(f'self.tail.next = {self.tail.next.value}')
         else:
             # if there was no tail before, there was also no head
             self.head = new_node
         self.tail = new_node
+        print(f'self.tail = {self.tail.value}')
         self.length += 1
 
     """
@@ -124,6 +127,8 @@ class DoublyLinkedList:
         if next is not None:
             node.next.prev = prev
 
+        if node == self.tail:
+            self.tail = prev
         node.next = self.head
         node.prev = None
         self.head.prev = node
@@ -135,7 +140,23 @@ class DoublyLinkedList:
     """
 
     def move_to_end(self, node):
-        pass
+        print(f'MOVE TO END: {node.value}')
+        if node == self.tail:
+            return
+
+        prev = node.prev
+        next = node.next
+
+        node.next.prev = prev
+        if prev is not None:
+            node.prev.next = next
+
+        if node == self.head:
+            self.head = next
+        node.next = None
+        node.prev = self.tail
+        self.tail.next = node
+        self.tail = node
 
     """
     Deletes the input node from the List, preserving the 
@@ -154,3 +175,17 @@ class DoublyLinkedList:
 
     def get_max(self):
         pass
+
+    def __str__(self):
+        val = f'length {self.length}: N'
+        cur_node = self.head
+        while cur_node is not None:
+            val += ' <-> '
+            if cur_node == self.head:
+                val += '(H)'
+            val += f'{cur_node.value}'
+            if cur_node == self.tail:
+                val += '(T)'
+            cur_node = cur_node.next
+        val += ' <-> N'
+        return val
