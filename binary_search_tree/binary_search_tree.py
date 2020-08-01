@@ -9,6 +9,8 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+from queue import Queue
+from stack import Stack
 
 
 class BSTNode:
@@ -72,22 +74,60 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        if self.left:
+            self.left.in_order_print()
+
+        print(self.value)
+
+        if self.right:
+            self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        # print current, add left child to queue, add right child to queue
+        # dequeue and print new current, add its left child, add its right child
+        # done when the queue is empty
+        bft_queue = Queue()
+        bft_queue.enqueue(self)
+        while bft_queue.__len__():
+            cur_node = bft_queue.dequeue()
+            print(cur_node.value)
+            if cur_node.left:
+                bft_queue.enqueue(cur_node.left)
+            if cur_node.right:
+                bft_queue.enqueue(cur_node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
+
     def dft_print(self):
-        pass
+        # same as in-order print, but iterative instead of recursive
+        # use a stack
+        # left, root, right
+        # push some initial value(s) onto the stack
+        # while stack is not empty
+        # pop ???
+        # print ???
+        # push ???
+        # done when stack is empty
+
+        dft_stack = Stack()
+        dft_stack.push(self)
+
+        while dft_stack.__len__() > 0:
+            cur_node = dft_stack.pop()
+            print(cur_node.value)
+            if cur_node.right:
+                dft_stack.push(cur_node.right)
+            if cur_node.left:
+                dft_stack.push(cur_node.left)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
+
     def pre_order_dft(self):
         pass
 
@@ -109,13 +149,10 @@ bst.insert(3)
 bst.insert(4)
 bst.insert(2)
 
-bst.bft_print()
-bst.dft_print()
-
-# print("elegant methods")
-# print("pre order")
-# bst.pre_order_dft()
-# print("in order")
-# bst.in_order_dft()
-# print("post order")
-# bst.post_order_dft()
+print("elegant methods")
+print("pre order")
+bst.pre_order_dft()
+print("in order")
+bst.in_order_print()
+print("post order")
+bst.post_order_dft()
